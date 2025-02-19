@@ -15,3 +15,13 @@ export async function POST(req: NextRequest) {
     return Response.json(error);
   }
 }
+
+export async function GET() {
+  try {
+    const allQuestions = await db.select().from(questionsTable);
+    return Response.json({ statusCode: 200, data: allQuestions });
+  } catch (error) {
+    console.log(error);
+    return Response.json(error);
+  }
+}

@@ -1,4 +1,7 @@
 "use server";
+
+import { revalidateTag } from "next/cache";
+
 interface Question {
   title: string;
   description: string;
@@ -10,6 +13,7 @@ export async function postQuestion(data: Question) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...data }),
     });
+    revalidateTag("question");
     return await res.json();
   } catch (error) {
     console.log(error);

@@ -7,7 +7,18 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TelegramIcon from "@mui/icons-material/Telegram";
 function Footer() {
   return (
-    <Box width={"100%"} bgcolor={"#1976d2"} display={"flex"} p={6} alignItems={{xs:"center"}} gap={{xs:3, md:0}} justifyContent={{ md:"space-between"}} flexDirection={{xs:"column", md:"row"}}>
+    <Box
+      width={"100%"}
+      bgcolor={"#1976d2"}
+      display={"flex"}
+      p={6}
+      alignItems={{ xs: "center" }}
+      gap={{ xs: 3, md: 0 }}
+      justifyContent={{ md: "space-between" }}
+      flexDirection={{ xs: "column", md: "row" }}
+      position={"relative"}
+      bottom={0}
+    >
       <Typography color="white" variant="subtitle1">
         @2025, All rights reserved.
       </Typography>
