@@ -13,7 +13,14 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useFilterStore } from "@/zustand/store";
 
 function QuestionsHeader() {
-  const { setSearchValue, searchValue } = useFilterStore((state) => state);
+  const {
+    setSearchValue,
+    searchValue,
+    isSortByNewer,
+    isSortByOlder,
+    setSortByNewer,
+    setSortByOlder,
+  } = useFilterStore((state) => state);
   return (
     <div>
       <Container maxWidth="lg" sx={{ mt: 20 }}>
@@ -58,11 +65,21 @@ function QuestionsHeader() {
             <Typography variant="subtitle1" component={"p"}>
               Filter By:
             </Typography>
-            <Button sx={{ padding: 2 }} variant="text" color="inherit">
+            <Button
+              sx={{ padding: 2 }}
+              variant={isSortByNewer ? "contained" : "text"}
+              color="inherit"
+              onClick={() => setSortByNewer(!isSortByNewer)}
+            >
               <ArrowDownwardIcon />
               Newer
             </Button>
-            <Button sx={{ padding: 2 }} variant="text" color="inherit">
+            <Button
+              sx={{ padding: 2 }}
+              variant={isSortByOlder ? "contained" : "text"}
+              color="inherit"
+              onClick={() => setSortByOlder(!isSortByOlder)}
+            >
               <ArrowDownwardIcon />
               Older
             </Button>

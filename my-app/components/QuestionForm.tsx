@@ -6,6 +6,10 @@ import {
   Box,
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   TextField,
   Typography,
 } from "@mui/material";
@@ -19,8 +23,16 @@ function QuestionForm() {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [open, setOpen] = useState(false);
-  async function submitForm(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const [openAlert, setOpenAlert] = useState(false);
+  const handleClickOpenAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
+
+  async function submitForm() {
     try {
       setIsLoading(true);
       setIsError(false);
@@ -36,6 +48,7 @@ function QuestionForm() {
       setTitle("");
       setDescription("");
       setIsLoading(false);
+      setOpenAlert(false);
     }
   }
   const handleClose = (
@@ -71,7 +84,10 @@ function QuestionForm() {
             component={"form"}
             width={"100%"}
             p={4}
-            onSubmit={submitForm}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleClickOpenAlert();
+            }}
             autoComplete="off"
           >
             <TextField
@@ -102,11 +118,7 @@ function QuestionForm() {
               fullWidth
               sx={{ paddingY: "10px" }}
             >
-              {isLoading ? (
-                <CircularProgress size="30px" sx={{ color: "white" }} />
-              ) : (
-                "submit"
-              )}
+              submit
             </Button>
           </Box>
         </Box>
@@ -130,6 +142,48 @@ function QuestionForm() {
             <></>
           )}
         </Snackbar>
+
+        <Dialog
+          open={openAlert}
+          onClose={handleCloseAlert}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth="xl"
+          sx={{ minWidth: "700px", padding: 30 }}
+        >
+          <DialogTitle
+            fontSize={{ xs: "1rem", md: "1.5rem", xl: "2rem" }}
+            id="alert-dialog-title"
+          >
+            Are you sure?
+          </DialogTitle>
+          <DialogContent
+            sx={{ width: { xs: "110px", lg: "600px" } }}
+          ></DialogContent>
+          <DialogActions>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                handleCloseAlert();
+              }}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={isLoading}
+              variant="contained"
+              onClick={submitForm}
+              autoFocus
+            >
+              {isLoading ? (
+                <CircularProgress size="30px" sx={{ color: "white" }} />
+              ) : (
+                "Yes"
+              )}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </>
   );

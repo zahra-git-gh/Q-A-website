@@ -13,6 +13,14 @@ export const useFilterStore = create<FilterStore>((set) => ({
   isSortByOlder: false,
   searchValue: "",
   setSearchValue: (value: string) => set(() => ({ searchValue: value })),
-  setSortByNewer: (value: boolean) => set(() => ({ isSortByNewer: value })),
-  setSortByOlder: (value: boolean) => set(() => ({ isSortByOlder: value })),
+  setSortByNewer: (value: boolean) =>
+    set((state) => ({
+      isSortByNewer: value,
+      isSortByOlder: value && state.isSortByOlder && false,
+    })),
+  setSortByOlder: (value: boolean) =>
+    set((state) => ({
+      isSortByOlder: value,
+      isSortByNewer: value && state.isSortByNewer && false,
+    })),
 }));

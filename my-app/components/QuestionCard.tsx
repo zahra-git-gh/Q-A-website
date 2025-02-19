@@ -21,7 +21,7 @@ function QuestionCard({ title, description, createdAt }: CardParams) {
     second: "numeric",
     hour12: true,
   });
-  console.log(formattedDate);
+  console.log(createdAt);
   return (
     <div>
       <Box display={"flex"} gap={2} paddingX={4} mb={4}>

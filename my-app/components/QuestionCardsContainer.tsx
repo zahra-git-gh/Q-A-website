@@ -12,10 +12,27 @@ interface CardsContainerParams {
   data: Question[];
 }
 function QuestionCardsContainer({ data }: CardsContainerParams) {
-  const searchValue = useFilterStore((state) => state.searchValue);
-  const filteredData = data.filter((q) => q.title.includes(searchValue));
+  const { searchValue, isSortByNewer, isSortByOlder } = useFilterStore(
+    (state) => state
+  );
+  const filteredData = data
+    .filter((q) => q.title.includes(searchValue))
+    .slice()
+    .sort((a, b) => {
+      if (isSortByNewer) {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      } else if (isSortByOlder) {
+        return (
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+      } else {
+        return 0;
+      }
+    });
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ mt: 5 }}>
       <Box>
         {filteredData.map((question) => (
           <QuestionCard
