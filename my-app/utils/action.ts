@@ -19,3 +19,15 @@ export async function postQuestion(data: Question) {
     console.log(error);
   }
 }
+
+export async function deleteItem(url: string, tag: string) {
+  try {
+    const res = await fetch(url, {
+      method: "DELETE",
+    });
+    revalidateTag(tag);
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+}

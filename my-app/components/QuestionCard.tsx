@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -5,12 +6,33 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import { Box, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckModal from "./CheckModal";
+
 interface CardParams {
   title: string;
   description: string;
   createdAt: Date;
+  isLoading: boolean;
+  submitFuctionality: () => void;
 }
-function QuestionCard({ title, description, createdAt }: CardParams) {
+function QuestionCard({
+  title,
+  description,
+  createdAt,
+  submitFuctionality,
+  isLoading,
+}: CardParams) {
+  const [openAlert, setOpenAlert] = React.useState(false);
+
+  const handleClickOpenAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    console.log("hiiii where are you ?");
+    setOpenAlert(false);
+  };
+
   const date = new Date(createdAt);
   const formattedDate = date.toLocaleString("en-US", {
     month: "numeric",
@@ -21,7 +43,7 @@ function QuestionCard({ title, description, createdAt }: CardParams) {
     second: "numeric",
     hour12: true,
   });
-  console.log(createdAt);
+
   return (
     <div>
       <Box display={"flex"} gap={2} paddingX={4} mb={4}>
@@ -66,6 +88,8 @@ function QuestionCard({ title, description, createdAt }: CardParams) {
           </CardActionArea>
         </Card>
         <Button
+          type="button"
+          onClick={() => handleClickOpenAlert()}
           variant="text"
           color="inherit"
           sx={{
@@ -78,6 +102,13 @@ function QuestionCard({ title, description, createdAt }: CardParams) {
           <DeleteIcon />
         </Button>
       </Box>
+
+      <CheckModal
+        openAlert={openAlert}
+        isLoading={isLoading}
+        handleCloseAlert={handleCloseAlert}
+        submitFuctionality={submitFuctionality}
+      />
     </div>
   );
 }

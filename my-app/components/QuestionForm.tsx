@@ -1,21 +1,11 @@
 "use client";
 
 import { postQuestion } from "@/utils/action";
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
-import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+import { SnackbarCloseReason } from "@mui/material/Snackbar";
+import CheckModal from "./CheckModal";
+import FinalAlert from "./Snackbar";
 function QuestionForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -124,66 +114,20 @@ function QuestionForm() {
         </Box>
       </Container>
       <div>
-        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-          {isSuccess && !isError ? (
-            <Alert
-              onClose={handleClose}
-              severity="success"
-              variant="filled"
-              sx={{ width: "100%" }}
-            >
-              Question added successfully.
-            </Alert>
-          ) : isError && !isSuccess ? (
-            <Alert severity="error">
-              Something went wrong. please try again
-            </Alert>
-          ) : (
-            <></>
-          )}
-        </Snackbar>
+        <FinalAlert
+          open={open}
+          isError={isError}
+          isSuccess={isSuccess}
+          handleCloseFunction={handleClose}
+          successText="Question added successfully!"
+        />
 
-        <Dialog
-          open={openAlert}
-          onClose={handleCloseAlert}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          maxWidth="xl"
-          sx={{ minWidth: "700px", padding: 30 }}
-        >
-          <DialogTitle
-            fontSize={{ xs: "1rem", md: "1.5rem", xl: "2rem" }}
-            id="alert-dialog-title"
-          >
-            Are you sure?
-          </DialogTitle>
-          <DialogContent
-            sx={{ width: { xs: "110px", lg: "600px" } }}
-          ></DialogContent>
-          <DialogActions>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                handleCloseAlert();
-              }}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-            <Button
-              disabled={isLoading}
-              variant="contained"
-              onClick={submitForm}
-              autoFocus
-            >
-              {isLoading ? (
-                <CircularProgress size="30px" sx={{ color: "white" }} />
-              ) : (
-                "Yes"
-              )}
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <CheckModal
+          openAlert={openAlert}
+          isLoading={isLoading}
+          handleCloseAlert={handleCloseAlert}
+          submitFuctionality={submitForm}
+        />
       </div>
     </>
   );
