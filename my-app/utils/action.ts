@@ -47,3 +47,16 @@ export async function deleteItem(url: string, tag: string) {
     console.log(error);
   }
 }
+
+export async function editAnswer(url: string, data: string) {
+  try {
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ answer: data }),
+    });
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+}

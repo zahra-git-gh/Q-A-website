@@ -1,6 +1,7 @@
-import AnswerCard from "@/components/AnswerCard";
+import AnswerCardsContainer from "@/components/AnswerCardsContainer";
 import AnswerForm from "@/components/AnswerForm";
 import Navbar from "@/components/Navbar";
+
 import { Box, Container, Divider, Typography } from "@mui/material";
 
 export default async function Page({
@@ -8,7 +9,7 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const questionId = await (await params).id;
+  const questionId = (await params).id;
   console.log(questionId);
   const res = await fetch(`http://localhost:3000/api/questions/${questionId}`, {
     next: { tags: ["answer"] },
@@ -38,11 +39,7 @@ export default async function Page({
           <Divider />
         </Box>
         <Box width={"100%"} mt={6}>
-          {data.answers.map(
-            (answer: { id: string; questionId: string; answer: string }) => (
-              <AnswerCard key={answer.id} answerText={answer.answer} />
-            )
-          )}
+          <AnswerCardsContainer data={data.answers} />
         </Box>
         <Box width={"100%"} mb={15}>
           <Typography variant="h6" component={"p"} mt={7}>
