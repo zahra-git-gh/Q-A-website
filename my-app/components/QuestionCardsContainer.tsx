@@ -81,6 +81,7 @@ function QuestionCardsContainer({ data }: CardsContainerParams) {
               submitFuctionality={deleteQuestion}
               isLoading={isLoading}
               key={question.id}
+              id={question.id}
             />
           );
         })}

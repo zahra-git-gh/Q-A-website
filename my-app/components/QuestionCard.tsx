@@ -7,6 +7,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import { Box, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckModal from "./CheckModal";
+import { useRouter } from "next/navigation";
 
 interface CardParams {
   title: string;
@@ -14,6 +15,7 @@ interface CardParams {
   createdAt: Date;
   isLoading: boolean;
   submitFuctionality: () => void;
+  id: string;
 }
 function QuestionCard({
   title,
@@ -21,9 +23,10 @@ function QuestionCard({
   createdAt,
   submitFuctionality,
   isLoading,
+  id,
 }: CardParams) {
   const [openAlert, setOpenAlert] = React.useState(false);
-
+  const router = useRouter();
   const handleClickOpenAlert = () => {
     setOpenAlert(true);
   };
@@ -59,6 +62,9 @@ function QuestionCard({
           variant="outlined"
         >
           <CardActionArea
+            onClick={() => {
+              router.push(`/questions/${id}`);
+            }}
             sx={{
               height: "100%",
               "&[data-active]": {

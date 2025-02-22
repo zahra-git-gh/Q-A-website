@@ -6,6 +6,10 @@ interface Question {
   title: string;
   description: string;
 }
+interface Answer {
+  answer: string;
+  questionId: string;
+}
 export async function postQuestion(data: Question) {
   try {
     const res = await fetch("http://localhost:3000/api/questions", {
@@ -19,7 +23,19 @@ export async function postQuestion(data: Question) {
     console.log(error);
   }
 }
-
+export async function postAnswers(data: Answer) {
+  try {
+    const res = await fetch("http://localhost:3000/api/answers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data }),
+    });
+    revalidateTag("answer");
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
 export async function deleteItem(url: string, tag: string) {
   try {
     const res = await fetch(url, {

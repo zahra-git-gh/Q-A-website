@@ -16,8 +16,6 @@ function Footer() {
       gap={{ xs: 3, md: 0 }}
       justifyContent={{ md: "space-between" }}
       flexDirection={{ xs: "column", md: "row" }}
-      position={"relative"}
-      bottom={0}
     >
       <Typography color="white" variant="subtitle1">
         @2025, All rights reserved.
