@@ -14,11 +14,13 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useTheme } from "@/context/ThemeProvider_temp";
+import { LightMode } from "@mui/icons-material";
 const pages = ["Home", "Questions", "About"];
 const routes = ["/", "/questions", "/about"];
 
 function Navbar() {
+  const { toggleTheme, mode } = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -99,8 +101,12 @@ function Navbar() {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="dark mode">
-              <Button variant="outlined">
-                <DarkModeIcon sx={{ color: "black" }} />
+              <Button onClick={toggleTheme} variant="outlined">
+                {mode === "light" ? (
+                  <DarkModeIcon sx={{ color: "black" }} />
+                ) : (
+                  <LightMode />
+                )}
               </Button>
             </Tooltip>
           </Box>

@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CssBaseline } from "@mui/material";
 import Footer from "@/components/Footer";
-
+import { ThemeProvider } from "@/context/ThemeProvider_temp";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,11 +28,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CssBaseline />
-
-        {children}
-        <footer>
-          <Footer />
-        </footer>
+        <ThemeProvider>
+          {children}
+          <footer>
+            <Footer />
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );
